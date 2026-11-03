@@ -35,17 +35,25 @@ function start(source, note) {
 }
 function stop(source) { held.delete(source); toneStop(source); renderHeld(); }
 function clear(prefix = '') { for (const source of [...held.keys()]) if (source.startsWith(prefix)) stop(source); }
+// Chaque octave a son propre repère pour rester lisible sur téléphone.
+const octaves = new Map();
+for (const octave of [4,5]) {
+  const block = document.createElement('div'); block.className = 'octave-block';
+  const label = document.createElement('p'); label.className = 'octave-label'; label.textContent = `Octave ${octave} · Do${octave} à Si${octave}`;
+  const row = document.createElement('div'); row.className = 'octave'; row.setAttribute('role','group'); row.setAttribute('aria-label',`Octave ${octave}`);
+  block.append(label,row); $('keyboard').append(block); octaves.set(octave,row);
+}
 let white = 0;
 for (let note = 60; note < 84; note++) {
   const black = names[note % 12].includes('♯'), key = document.createElement('button');
   key.type = 'button'; key.className = 'key' + (black ? ' black' : ''); key.textContent = noteName(note); key.setAttribute('aria-label', `Jouer ${noteName(note)}`); key.setAttribute('aria-pressed','false');
-  if (black) key.style.left = `${white / 14 * 100}%`; else white++;
+  if (black) key.style.left = `${(white % 7) / 7 * 100}%`; else white++;
   key.onpointerdown = event => { if (event.button !== 0) return; event.preventDefault(); key.focus({preventScroll:true}); key.setPointerCapture(event.pointerId); start(`pointer:${event.pointerId}`,note); };
   key.onpointerup = key.onpointercancel = key.onlostpointercapture = event => stop(`pointer:${event.pointerId}`);
   key.onkeydown = event => { if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); if (!event.repeat) start(`keyboard:${note}`,note); } };
   key.onkeyup = event => { if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); stop(`keyboard:${note}`); } };
   key.onblur = () => stop(`keyboard:${note}`);
-  keys.set(note,key); $('keyboard').append(key);
+  keys.set(note,key); octaves.get(Math.floor(note / 12)-1).append(key);
 }
 $('sound').onchange = () => { if (!$('sound').checked) for (const source of [...voices.keys()]) toneStop(source); };
 window.addEventListener('blur', () => { clear(); pausePractice(); });

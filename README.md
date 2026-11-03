@@ -14,7 +14,7 @@ Documentation officielle : https://docs.github.com/en/pages/getting-started-with
 
 ## Jouer
 
-Toucher ou cliquer les notes. Au clavier d’ordinateur : Tab pour choisir une touche, Espace ou Entrée pour la jouer. Sur petit écran, faire défiler le clavier horizontalement. Le son peut être désactivé. Suivre les notes pointillées de la gamme ; une erreur ne fait pas avancer. Recommencer remet la progression à zéro. Les ateliers réussis et les meilleurs résultats sont conservés localement sur ce navigateur, sans synchronisation entre appareils.
+Toucher ou cliquer les notes. Au clavier d’ordinateur : Tab pour choisir une touche, Espace ou Entrée pour la jouer. Sur téléphone, les deux octaves complètes sont empilées, sans défilement horizontal. Le son peut être désactivé. Suivre les notes pointillées de la gamme ; une erreur ne fait pas avancer. Recommencer remet la progression à zéro. Les ateliers réussis et les meilleurs résultats sont conservés localement sur ce navigateur, sans synchronisation entre appareils.
 
 ## MIDI et Chrome Android
 
