@@ -18,6 +18,10 @@ export const lessons = {
     {id:'song-twinkle',title:'Ah ! vous dirai-je, maman',notes:[60,60,67,67,69,69,67,65,65,64,64,62,62,60],beats:[1,1,1,1,1,1,2,1,1,1,1,1,1,2],tip:'Première phrase traditionnelle. Répétez les notes en les relâchant entre chaque attaque. Les nombres indiquent les temps ; ce mode vérifie les hauteurs, à votre rythme.'},
     {id:'song-joy',title:'Ode à la joie · début',notes:[64,64,65,67,67,65,64,62,60,60,62,64,64,62,62],beats:[1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,2],tip:'Début du thème de Beethoven. Écoutez la démonstration, puis retrouvez les notes. Ce mode vérifie les hauteurs, pas encore les durées.'}
   ],
+  chords: [
+    {id:'chords-major',title:'Mes premiers accords majeurs',chords:[[60,64,67],[65,69,72],[67,71,74]],notes:[60,65,67],tip:'Un accord réunit plusieurs notes. Jouez ensemble Do–Mi–Sol, puis Fa–La–Do et Sol–Si–Ré. Main droite : doigts 1–3–5, sans forcer. Relâchez avant l’accord suivant.'},
+    {id:'chords-minor',title:'Découvrir les accords mineurs',chords:[[69,72,76],[62,65,69],[64,67,71]],notes:[69,62,64],tip:'La mineur : La–Do–Mi. Ré mineur : Ré–Fa–La. Mi mineur : Mi–Sol–Si. Jouez les trois notes ensemble, puis relâchez. Écoutez la différence avec les accords majeurs.'}
+  ],
   rhythm: [
     {id:'rhythm-quarter',title:'La pulsation · noires',beats:[1,1,1,1,1,1,1,1],tip:'Une noire dure un temps. Après quatre clics de départ, jouez huit Do4, un par temps.'},
     {id:'rhythm-half',title:'Noires et blanches',beats:[1,1,2,1,1,2],tip:'Une blanche dure deux temps. Suivez les attaques : Do, Do, Do tenu deux temps. La durée de maintien n’est pas évaluée.'},
@@ -42,3 +46,6 @@ export function readProgress(storage) {
     return Object.fromEntries(Object.entries(value).filter(([id,v])=>Object.values(lessons).flat().some(l=>l.id===id) && v && Number.isInteger(v.best) && v.best>=0 && v.best<=100 && Number.isInteger(v.runs) && v.runs>0));
   } catch {return {};}
 }
+
+export function matchRhythmTap(elapsed,offsets,bpm,used){const tolerance=Math.min(300,60000/bpm*.4);let best=-1,distance=Infinity;offsets.forEach((offset,i)=>{const d=Math.abs(elapsed-offset);if(!used.has(i)&&d<distance){best=i;distance=d;}});return distance<=tolerance?best:-1;}
+export function chordMatches(played,expected){const held=[...new Set(played)];return held.length===expected.length&&expected.every(n=>held.includes(n));}

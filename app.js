@@ -1,5 +1,6 @@
+import {initRecorder,captureOn,captureOff,capturing,stopTake} from './recorder.js?v=5';
 import {names, noteName, parseMidi} from './music.js';
-import {initStudio, handlePracticeNote, pausePractice} from './studio.js?v=4';
+import {initStudio, handlePracticeNote, pausePractice} from './studio.js?v=5';
 const $ = id => document.getElementById(id);
 const keys = new Map();
 // Une source par doigt, touche d’ordinateur ou canal MIDI évite qu’un note-off
@@ -30,10 +31,10 @@ function renderHeld() {
 }
 function start(source, note) {
   if (held.has(source)) return;
-  held.set(source,note); toneStart(source,note); renderHeld();
-  handlePracticeNote(note);
+  held.set(source,note); captureOn(source,note); toneStart(source,note); renderHeld();
+  if(!source.startsWith('replay:')&&!capturing())handlePracticeNote(note,[...held.values()]);
 }
-function stop(source) { held.delete(source); toneStop(source); renderHeld(); }
+function stop(source) { captureOff(source); held.delete(source); toneStop(source); renderHeld(); }
 function clear(prefix = '') { for (const source of [...held.keys()]) if (source.startsWith(prefix)) stop(source); }
 // Chaque octave a son propre repère pour rester lisible sur téléphone.
 const octaves = new Map();
@@ -56,8 +57,8 @@ for (let note = 60; note < 84; note++) {
   keys.set(note,key); octaves.get(Math.floor(note / 12)-1).append(key);
 }
 $('sound').onchange = () => { if (!$('sound').checked) for (const source of [...voices.keys()]) toneStop(source); };
-window.addEventListener('blur', () => { clear(); pausePractice(); });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { clear(); pausePractice(); } });
+window.addEventListener('blur', () => { clear(); pausePractice(); stopTake(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { clear(); pausePractice(); stopTake(); } });
 function selectInput() {
   if (selected) selected.onmidimessage = null;
   clear('midi:'); selected = access.inputs.get($('device').value);
@@ -93,3 +94,5 @@ $('connect').onclick = async () => {
   } finally { $('connect').disabled = false; }
 };
 initStudio(keys, clear);
+
+initRecorder({start,stop,clear,pause:pausePractice});

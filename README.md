@@ -49,3 +49,11 @@ Cette version constitue un parcours débutant, pas un cours exhaustif : pas enco
 Fiches de quatre gammes avec couleur personnalisable enregistrée localement, armure, intervalles, écoute individuelle et doigtés main droite/gauche. Les couleurs peuvent être modifiées sans changer l’identification textuelle. Deux ateliers supplémentaires sur les octaves. Le parcours « J’ai 5 minutes » enchaîne notes, Do majeur et première mélodie, sans chronomètre imposé.
 
 Les deux mélodies intégrées sont affichées en clé de sol sur quatre mesures à 4/4, avec note attendue encadrée et notes réussies vertes. Les noms peuvent être masqués. La reconnaissance MIDI avance sur les hauteurs dans l’ordre ; la durée tenue n’est pas évaluée. Une mesure peut être isolée et répétée ; seule la partition entière valide l’atelier. Pas encore d’import MusicXML/PDF ni de lecture polyphonique. Le rendu de portée est limité aux extraits en Do majeur intégrés.
+
+## Studio 04 · navigation, rythme et enregistrement
+
+Menu déroulant regroupé par apprentissage et pratique. Deux ateliers d’accords majeurs/mineurs : validation de trois notes tenues ensemble, sans note supplémentaire ; la pédale sustain n’est pas interprétée. En rythme, le mode Découverte laisse finir l’essai et donne un bilan, avec bouton de frappe et repères visuels. Sa tolérance est de ±40 % du temps, plafonnée à 300 ms. Le mode Défi conserve le comportement strict.
+
+Le panneau Mon enregistrement capture les notes et durées MIDI/tactiles, pas le son réel. Limites : 3 minutes et 1 000 notes ; la dernière prise est enregistrée localement et une nouvelle prise la remplace à l’arrêt. Réécoute par synthèse locale, sans validation d’exercice, et export MIDI format 0. Le téléchargement doit être conservé pour archiver plusieurs prises. Pas d’accès microphone. Les changements de focus arrêtent la lecture et la capture pour éviter des notes bloquées.
+
+L’import automatique de PDF reste à développer : il nécessite la reconnaissance optique musicale puis la vérification du résultat avant suivi.
