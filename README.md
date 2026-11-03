@@ -1,2 +1,35 @@
-# piano-studio
-Mon application interactive pour apprendre le piano
+# Piano Studio
+
+Application statique mobile-first en français, sans dépendance ni compilation. Clavier tactile/souris de 24 touches (Do4–Si5), synthèse sonore locale et première gamme guidée (Do4–Do5).
+
+## Publier sur GitHub Pages
+
+1. Ouvrir https://github.com/Lisune12/piano-studio/settings/pages
+2. Dans **Build and deployment**, choisir **Deploy from a branch**.
+3. Sélectionner **main**, dossier **/(root)**, puis **Save**.
+4. Attendre la réussite du déploiement dans l’onglet Actions. L’adresse attendue est https://lisune12.github.io/piano-studio/ ; elle devient disponible après publication réussie.
+5. Vérifier **Enforce HTTPS** si proposé.
+
+Documentation officielle : https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+## Jouer
+
+Toucher ou cliquer les notes. Au clavier d’ordinateur : Tab pour choisir une touche, Espace ou Entrée pour la jouer. Sur petit écran, faire défiler le clavier horizontalement. Le son peut être désactivé. Suivre les notes pointillées de la gamme ; une erreur ne fait pas avancer. Recommencer remet la progression à zéro. Rien n’est conservé après rechargement.
+
+## MIDI et Chrome Android
+
+Ouvrir le site HTTPS dans Chrome compatible. Brancher un clavier USB MIDI avec un câble de données et un adaptateur USB/OTG adapté au téléphone. Appuyer sur **Connecter mon piano MIDI**, accepter l’autorisation et choisir l’entrée. Aucun accès au chargement : `navigator.requestMIDIAccess({sysex:false})` est appelé uniquement par le bouton. Aucun message MIDI n’est envoyé au matériel.
+
+Si l’accès est refusé, vérifier les autorisations du site puis réessayer. Si aucun appareil n’apparaît, vérifier alimentation, câble et adaptateur puis rebrancher. Si l’API est absente, utiliser un navigateur compatible ou le mode démo. HTTPS est requis hors localhost. La compatibilité dépend du téléphone, du navigateur et du clavier : **aucun test MIDI sur matériel physique n’a été réalisé**.
+
+Note-on et note-off sur les 16 canaux, y compris note-on de vélocité zéro, sont pris en charge. Débranchements et changements d’entrée libèrent les notes. Les notes MIDI 0–127 sont affichées ; seules 60–83 illuminent le clavier visible. Pédale/sustain et autres messages sont ignorés. Son synthétique simple sans gestion de vélocité ni échantillons. Le tactile reste disponible avec MIDI.
+
+Références : https://www.w3.org/TR/webmidi/ et https://developer.chrome.com/blog/web-midi-permission-prompt
+
+## Développement et tests
+
+Servir ce dossier avec un serveur HTTP statique, par exemple `python -m http.server 8000`, puis ouvrir http://localhost:8000. Éviter file:// car l’application utilise des modules JavaScript.
+
+Avec Node.js : `npm test` sans installation. Tests du décodage MIDI et de la progression dans tests/music.test.js. Pour une recette manuelle : fausse note, gamme entière, recommencer, touches au clavier, plusieurs doigts, perte de focus, son coupé, permission refusée, choix et débranchement d’une entrée. Les tests simulés ne remplacent pas un essai Android/MIDI réel.
+
+Fichiers : index.html (structure accessible), style.css, app.js (interface/audio/entrées), music.js (logique musicale), tests/music.test.js. Aucun compte, pisteur ou service externe.
