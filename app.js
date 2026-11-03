@@ -1,10 +1,11 @@
-import {names, scale, noteName, parseMidi, advance} from './music.js';
+import {names, noteName, parseMidi} from './music.js';
+import {initStudio, handlePracticeNote, pausePractice} from './studio.js';
 const $ = id => document.getElementById(id);
 const keys = new Map();
 // Une source par doigt, touche d’ordinateur ou canal MIDI évite qu’un note-off
 // éteigne une même note encore tenue par une autre source.
 const held = new Map();
-let position = 0, access, selected, audio;
+let access, selected, audio;
 const voices = new Map();
 function toneStart(source, note) {
   if (!$('sound').checked) return;
@@ -27,18 +28,10 @@ function renderHeld() {
   for (const [note, key] of keys) { const on = notes.includes(note); key.classList.toggle('active', on); key.setAttribute('aria-pressed', String(on)); }
   $('notes').textContent = notes.length ? notes.map(noteName).join(' · ') : 'À vous de jouer…';
 }
-function renderExercise() {
-  $('steps').replaceChildren(...scale.map((note, i) => { const li = document.createElement('li'); li.textContent = noteName(note) + (i < position ? ' ✓' : ''); li.className = i < position ? 'done' : i === position ? 'current' : ''; if (i === position) li.setAttribute('aria-current','step'); return li; }));
-  $('progress').value = position; $('progress').textContent = `${position} / 8`; $('count').textContent = `${position} / 8`;
-  for (const [note,key] of keys) key.classList.toggle('target', note === scale[position]);
-}
 function start(source, note) {
   if (held.has(source)) return;
   held.set(source,note); toneStart(source,note); renderHeld();
-  if (position === 8) return;
-  const next = advance(position,note);
-  if (next !== position) { position = next; $('feedback').textContent = position === 8 ? 'Bravo ! Votre gamme est complète. Recommencez à votre rythme. ♡' : `Bien joué ! Maintenant : ${noteName(scale[position])}.`; renderExercise(); }
-  else $('feedback').textContent = `${noteName(note)} : essayez ${noteName(scale[position])}. Prenez votre temps.`;
+  handlePracticeNote(note);
 }
 function stop(source) { held.delete(source); toneStop(source); renderHeld(); }
 function clear(prefix = '') { for (const source of [...held.keys()]) if (source.startsWith(prefix)) stop(source); }
@@ -54,10 +47,9 @@ for (let note = 60; note < 84; note++) {
   key.onblur = () => stop(`keyboard:${note}`);
   keys.set(note,key); $('keyboard').append(key);
 }
-$('reset').onclick = () => { clear(); position = 0; renderExercise(); $('feedback').textContent = 'À vous : commencez par Do4.'; };
 $('sound').onchange = () => { if (!$('sound').checked) for (const source of [...voices.keys()]) toneStop(source); };
-window.addEventListener('blur', () => clear());
-document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); });
+window.addEventListener('blur', () => { clear(); pausePractice(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { clear(); pausePractice(); } });
 function selectInput() {
   if (selected) selected.onmidimessage = null;
   clear('midi:'); selected = access.inputs.get($('device').value);
@@ -92,4 +84,4 @@ $('connect').onclick = async () => {
     $('midi-status').textContent = error.name === 'NotAllowedError' || error.name === 'SecurityError' ? 'Accès MIDI refusé ou bloqué. Autorisez MIDI dans les paramètres du site puis réessayez. Le mode démo reste disponible.' : 'Connexion MIDI impossible. Vérifiez le navigateur et le câble, puis réessayez.';
   } finally { $('connect').disabled = false; }
 };
-renderExercise();
+initStudio(keys, clear);

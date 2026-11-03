@@ -14,7 +14,7 @@ Documentation officielle : https://docs.github.com/en/pages/getting-started-with
 
 ## Jouer
 
-Toucher ou cliquer les notes. Au clavier d’ordinateur : Tab pour choisir une touche, Espace ou Entrée pour la jouer. Sur petit écran, faire défiler le clavier horizontalement. Le son peut être désactivé. Suivre les notes pointillées de la gamme ; une erreur ne fait pas avancer. Recommencer remet la progression à zéro. Rien n’est conservé après rechargement.
+Toucher ou cliquer les notes. Au clavier d’ordinateur : Tab pour choisir une touche, Espace ou Entrée pour la jouer. Sur petit écran, faire défiler le clavier horizontalement. Le son peut être désactivé. Suivre les notes pointillées de la gamme ; une erreur ne fait pas avancer. Recommencer remet la progression à zéro. Les ateliers réussis et les meilleurs résultats sont conservés localement sur ce navigateur, sans synchronisation entre appareils.
 
 ## MIDI et Chrome Android
 
@@ -33,3 +33,13 @@ Servir ce dossier avec un serveur HTTP statique, par exemple `python -m http.ser
 Avec Node.js : `npm test` sans installation. Tests du décodage MIDI et de la progression dans tests/music.test.js. Pour une recette manuelle : fausse note, gamme entière, recommencer, touches au clavier, plusieurs doigts, perte de focus, son coupé, permission refusée, choix et débranchement d’une entrée. Les tests simulés ne remplacent pas un essai Android/MIDI réel.
 
 Fichiers : index.html (structure accessible), style.css, app.js (interface/audio/entrées), music.js (logique musicale), tests/music.test.js. Aucun compte, pisteur ou service externe.
+
+## Studio 02 · apprentissage
+
+Quatre espaces : Notes (touches blanches et dièses), Gammes (Do, Sol, Fa majeurs et La mineur naturelle, montée ou aller-retour avec doigtés main droite), Rythme (noires, blanches, croches, départ de quatre temps et évaluation des attaques), Mélodies (premières phrases de Ah ! vous dirai-je, maman et Ode à la joie). Démonstration sonore, guide désactivable, tempo 40–140 BPM, métronome et repères de pratique.
+
+Les mélodies vérifient la hauteur dans l’ordre, sans évaluer les durées. Le rythme vérifie les attaques de Do4 dans une fenêtre de ±25 % du temps, plafonnée à 180 ms ; il ne mesure pas la durée tenue. Une attaque manquée demande de recommencer. La latence MIDI/audio peut influencer les résultats. Le métronome et les démonstrations ont leur propre son, indépendant de la case Son du clavier.
+
+Une réussite signifie finir l’atelier. Le score dépend du nombre d’erreurs ; les résultats sont sauvés dans localStorage (clé piano-studio-progress-v2). Si le stockage est bloqué, la séance reste utilisable et un message le signale. Effacer les données du site efface les résultats. Aucun accès MIDI automatique.
+
+Cette version constitue un parcours débutant, pas un cours exhaustif : pas encore de portée interactive, de coordination à deux mains, d’accords guidés ni d’évaluation de durée de note. Connexion matérielle rapportée fonctionnelle par l’utilisatrice ; les nouvelles fonctions restent à essayer sur son piano.
