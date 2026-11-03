@@ -4,6 +4,10 @@ export const lessons = {
     {id:'notes-white', title:'Les sept notes', notes:[60,64,67,62,65,69,71], tip:'Repérez les groupes de deux touches noires : le Do est juste à leur gauche. Retrouvez chaque note demandée.'},
     {id:'notes-sharp', title:'Découvrir les dièses', notes:[61,63,66,68,70], tip:'Un dièse (♯) monte la note d’un demi-ton : c’est la touche immédiatement à droite, blanche ou noire.'}
   ],
+  octaves: [
+    {id:'octaves-pairs',title:'Une note, deux octaves',notes:[60,72,62,74,64,76,65,77,67,79],tip:'Une octave sépare deux notes de même nom. Jouez la note grave puis son écho aigu : Do4 puis Do5, Ré4 puis Ré5…'},
+    {id:'octaves-find',title:'Grave ou aigu ?',notes:[76,60,79,65,72,62,77,67],tip:'Le nom ne suffit pas : observez aussi le numéro d’octave. La même note une octave plus haut possède une fréquence deux fois plus élevée.'}
+  ],
   scales: [
     {id:'scale-c',title:'Do majeur',notes:[60,62,64,65,67,69,71,72],fingers:[1,2,3,1,2,3,4,5],tip:'Aucune touche noire. Main droite : passez doucement le pouce sous le majeur entre Mi et Fa.'},
     {id:'scale-g',title:'Sol majeur',notes:[67,69,71,72,74,76,78,79],fingers:[1,2,3,1,2,3,4,5],tip:'Un dièse : Fa♯. Gardez le poignet souple et cherchez un son régulier.'},

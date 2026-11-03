@@ -43,3 +43,9 @@ Les mélodies vérifient la hauteur dans l’ordre, sans évaluer les durées. L
 Une réussite signifie finir l’atelier. Le score dépend du nombre d’erreurs ; les résultats sont sauvés dans localStorage (clé piano-studio-progress-v2). Si le stockage est bloqué, la séance reste utilisable et un message le signale. Effacer les données du site efface les résultats. Aucun accès MIDI automatique.
 
 Cette version constitue un parcours débutant, pas un cours exhaustif : pas encore de portée interactive, de coordination à deux mains, d’accords guidés ni d’évaluation de durée de note. Connexion matérielle rapportée fonctionnelle par l’utilisatrice ; les nouvelles fonctions restent à essayer sur son piano.
+
+## Studio 03 · fiches et portée
+
+Fiches de quatre gammes avec couleur personnalisable enregistrée localement, armure, intervalles, écoute individuelle et doigtés main droite/gauche. Les couleurs peuvent être modifiées sans changer l’identification textuelle. Deux ateliers supplémentaires sur les octaves. Le parcours « J’ai 5 minutes » enchaîne notes, Do majeur et première mélodie, sans chronomètre imposé.
+
+Les deux mélodies intégrées sont affichées en clé de sol sur quatre mesures à 4/4, avec note attendue encadrée et notes réussies vertes. Les noms peuvent être masqués. La reconnaissance MIDI avance sur les hauteurs dans l’ordre ; la durée tenue n’est pas évaluée. Une mesure peut être isolée et répétée ; seule la partition entière valide l’atelier. Pas encore d’import MusicXML/PDF ni de lecture polyphonique. Le rendu de portée est limité aux extraits en Do majeur intégrés.

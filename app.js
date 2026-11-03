@@ -1,5 +1,5 @@
 import {names, noteName, parseMidi} from './music.js';
-import {initStudio, handlePracticeNote, pausePractice} from './studio.js';
+import {initStudio, handlePracticeNote, pausePractice} from './studio.js?v=4';
 const $ = id => document.getElementById(id);
 const keys = new Map();
 // Une source par doigt, touche d’ordinateur ou canal MIDI évite qu’un note-off
